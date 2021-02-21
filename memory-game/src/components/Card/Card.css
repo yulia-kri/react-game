@@ -2,7 +2,6 @@
   position: relative;
   height: 25rem;
   width: 16rem;
-  background: #231e4e;
   border-radius: 12px;
 }
 
@@ -64,6 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #231e4e;
 }
 
 .cobweb {

@@ -7,20 +7,31 @@ import './Game.css';
 
 export default class Board extends Component {
   state = {
-    cards: cards,
+    cards: cards.map((card) => {
+      return { ...card, isFlipped: false };
+    }),
   };
 
-  flipCard = (card) => {
-    console.log(card);
+  flipCard = (name) => {
+    console.log(name);
+    this.setState(({ cards }) => {
+      return {
+        cards: cards.map((card) =>
+          card.name === name ? { ...card, isFlipped: !card.isFlipped } : card,
+        ),
+      };
+    });
   };
 
   render() {
     const { cards } = this.state;
 
+    console.log(cards);
+
     return (
       <div className='game__board'>
         {cards.map((card) => (
-          <Card card={card} isFlipped={false} flipCard={this.flipCard} key={card.name} />
+          <Card card={card} flipCard={this.flipCard} key={card.name} />
         ))}
       </div>
     );
