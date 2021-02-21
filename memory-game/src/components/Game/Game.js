@@ -3,11 +3,15 @@ import React, { Component } from 'react';
 import Card from '../Card/Card';
 import cards from '../../data/cards.data';
 
-import './Board.css';
+import './Game.css';
 
 export default class Board extends Component {
   state = {
     cards: cards,
+  };
+
+  flipCard = (card) => {
+    console.log(card);
   };
 
   render() {
@@ -15,8 +19,8 @@ export default class Board extends Component {
 
     return (
       <div className='game__board'>
-        {cards.map(({ name, imageUrl }) => (
-          <Card name={name} imageUrl={imageUrl} isFlipped={false} key={name} />
+        {cards.map((card) => (
+          <Card card={card} isFlipped={false} flipCard={this.flipCard} key={card.name} />
         ))}
       </div>
     );

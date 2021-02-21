@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Board from '../Board/Board';
+import Game from '../Game/Game';
 
 import './App.css';
 
@@ -17,7 +17,7 @@ const App = () => {
             Flips <span>10</span>
           </div>
         </div>
-        <Board />
+        <Game />
       </div>
     </React.Fragment>
   );
