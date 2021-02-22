@@ -1,4 +1,4 @@
-const cards = [
+const cardsArray = [
   {
     imageUrl: 'AlbusDumbledore.jpg',
     name: 'Albus Dumbledore',
@@ -47,6 +47,22 @@ const cards = [
     imageUrl: 'Dobby.jpg',
     name: 'Dobby',
   },
+  {
+    imageUrl: 'SiriusBlack.jpg',
+    name: 'Sirius Black',
+  },
+  {
+    imageUrl: 'RemusLupin.png',
+    name: 'Remus Lupin',
+  },
+  {
+    imageUrl: 'AlastorMoody.jpg',
+    name: 'Alastor Moody',
+  },
+  {
+    imageUrl: 'CedricDiggory.jpg',
+    name: 'Cedric Diggory',
+  },
 ];
 
-export default cards;
+export default cardsArray;
