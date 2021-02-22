@@ -6,14 +6,13 @@ import './Card.css';
 
 export default class Card extends Component {
   render() {
-    const {
-      card: { id, name, imageUrl, isFlipped },
-      flipCard,
-      cardBack,
-    } = this.props;
+    const { card, flipCard, cardBack } = this.props;
+    const { name, imageUrl, isFlipped, matched } = card;
 
     return (
-      <div className={`card ${isFlipped ? 'visible' : ''}`} onClick={() => flipCard(id)}>
+      <div
+        className={`card ${isFlipped ? 'visible' : ''} ${matched ? 'matched' : ''}`}
+        onClick={() => flipCard(card)}>
         <div className='card-back card-face'>
           <img src={cobweb} alt='' className='cobweb top-left' />
           <img src={cobweb} alt='' className='cobweb top-right' />

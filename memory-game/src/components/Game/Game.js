@@ -19,8 +19,10 @@ export default class Board extends Component {
       cardBack: props.cardBack,
       totalClicks: 0,
       cards: null,
-      matchedCards: null,
     };
+    this.cardToCheck = null;
+    this.matchedCards = [];
+    this.busy = false;
   }
 
   componentDidMount() {
@@ -40,12 +42,15 @@ export default class Board extends Component {
     });
   }
 
-  canFlipCard = (card) => {
-    return true;
-  };
+  canFlipCard(card) {
+    return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
+  }
 
-  flipCard = (id) => {
-    console.log(id);
+  flipCard = (card) => {
+    if (!this.canFlipCard(card)) return;
+
+    const { id } = card;
+
     this.setState(({ cards, totalClicks }) => {
       const newTotalClicks = ++totalClicks;
 
@@ -56,10 +61,69 @@ export default class Board extends Component {
         totalClicks: newTotalClicks,
       };
     });
+
+    if (this.cardToCheck) {
+      this.checkForMatch(card);
+    } else {
+      this.cardToCheck = card;
+    }
   };
+
+  checkForMatch = (card) => {
+    card.name === this.cardToCheck.name
+      ? this.cardsMatch(card, this.cardToCheck)
+      : this.cardsMismatch(card, this.cardToCheck);
+
+    this.cardToCheck = null;
+    console.log('card to check', this.cardToCheck);
+  };
+
+  cardsMatch(card1, card2) {
+    this.matchedCards.push(card1);
+    this.matchedCards.push(card2);
+
+    console.log('matched cards:', this.matchedCards);
+
+    this.setState(({ cards }) => {
+      return {
+        cards: cards.map((card) => {
+          const { id } = card;
+          const card1Id = card1.id;
+          const card2Id = card2.id;
+          if (id === card1Id || id === card2Id) return { ...card, matched: true };
+          return card;
+        }),
+      };
+    });
+
+    this.cardToCheck = null;
+
+    if (this.matchedCards.length === this.state.cards.length) {
+      console.log('win');
+    }
+  }
+
+  cardsMismatch(card1, card2) {
+    this.busy = true;
+    setTimeout(() => {
+      this.busy = false;
+      this.setState(({ cards }) => {
+        return {
+          cards: cards.map((card) => {
+            const { id } = card;
+            const card1Id = card1.id;
+            const card2Id = card2.id;
+            if (id === card1Id || id === card2Id) return { ...card, isFlipped: false };
+            return card;
+          }),
+        };
+      });
+    }, 1000);
+  }
 
   render() {
     const { cards, cardBack, totalTime, totalClicks } = this.state;
+    console.log(this.state);
 
     if (!cards) return <Spinner />;
 
