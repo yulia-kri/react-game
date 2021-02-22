@@ -5,10 +5,6 @@
   border-radius: 12px;
 }
 
-.card:hover {
-  cursor: pointer;
-}
-
 .card.visible .card-back {
   transform: rotateY(-180deg);
 }
@@ -63,7 +59,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #231e4e;
+  background: #071a3b;
 }
 
 .cobweb {
