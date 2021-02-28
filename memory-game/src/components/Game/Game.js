@@ -20,9 +20,6 @@ export default class Board extends Component {
       props.sounds,
       props.soundsVolume,
     );
-    this.totalTime = props.totalTime;
-    this.numberOfCards = props.numberOfCards / 2;
-    this.cardBack = props.cardBack;
     this.state = {
       totalClicks: 0,
       cards: null,
@@ -33,12 +30,14 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
+    const { numberOfCards } = this.props;
+
     let newCards = cardsArray.map((card) => {
       return { ...card, isFlipped: false, id: card.name.replace(/\s/g, '') };
     });
     newCards = shuffleArray(newCards);
     newCards = newCards
-      .slice(0, this.numberOfCards)
+      .slice(0, numberOfCards / 2)
       .flatMap((card) => [card, { ...card, id: `2nd${card.id}` }]);
     newCards = shuffleArray(newCards);
 
@@ -50,7 +49,9 @@ export default class Board extends Component {
   }
 
   canFlipCard(card) {
-    return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
+    let sameCards;
+    if (this.cardToCheck) sameCards = card.id === this.cardToCheck.id;
+    return !this.busy && !this.matchedCards.includes(card) && !sameCards;
   }
 
   flipCard = (card) => {
@@ -84,7 +85,6 @@ export default class Board extends Component {
       : this.cardsMismatch(card, this.cardToCheck);
 
     this.cardToCheck = null;
-    console.log('card to check', this.cardToCheck);
   };
 
   cardsMatch(card1, card2) {
@@ -116,6 +116,7 @@ export default class Board extends Component {
 
   cardsMismatch(card1, card2) {
     this.busy = true;
+
     setTimeout(() => {
       this.busy = false;
       this.setState(({ cards }) => {
@@ -134,18 +135,18 @@ export default class Board extends Component {
 
   render() {
     const { cards, totalClicks } = this.state;
-    console.log(this.state);
+    const { totalTime, cardBack } = this.props;
 
     if (!cards) return <Spinner />;
 
     return (
       <div className='game'>
         <div className='game__info'>
-          <Timer timeRemaining={this.totalTime} />
+          <Timer timeRemaining={totalTime} />
           <FlipsCounter totalClicks={totalClicks} />
         </div>
         {cards.map((card) => (
-          <Card card={card} flipCard={this.flipCard} cardBack={this.cardBack} key={card.id} />
+          <Card card={card} flipCard={this.flipCard} cardBack={cardBack} key={card.id} />
         ))}
       </div>
     );
