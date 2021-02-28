@@ -1,0 +1,14 @@
+input[type='range'] {
+  height: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.fade {
+  opacity: 0.5;
+  pointer-events: none;
+}
