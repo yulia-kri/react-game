@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 
 export default class Timer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timeRemaining: props.timeRemaining,
-    };
-  }
+  state = {
+    timeRemaining: this.props.timeRemaining,
+  };
 
   componentDidMount() {
     this.interval = setInterval(this.startCountdown, 1000);
   }
 
   startCountdown = () => {
-    this.setState(({ timeRemaining }) => {
-      const time = --timeRemaining;
-      return { timeRemaining: time };
-    });
+    const { timeRemaining } = this.state;
+
+    if (timeRemaining > 0) {
+      this.setState(({ timeRemaining }) => {
+        const time = --timeRemaining;
+        return { timeRemaining: time };
+      });
+    } else {
+      this.props.endGame();
+    }
   };
 
   componentWillUnmount() {

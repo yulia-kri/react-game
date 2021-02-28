@@ -4,6 +4,8 @@ import Card from '../Card/Card';
 import Timer from '../Timer/Timer';
 import FlipsCounter from '../FlipsCounter/FlipsCounter';
 import Spinner from '../Spinner/Spinner';
+import Victory from '../Victory/Victory';
+import Defeat from '../Defeat/Defeat';
 
 import cardsArray from '../../data/cards.data';
 import shuffleArray from '../../utils/helpers';
@@ -23,6 +25,8 @@ export default class Board extends Component {
     this.state = {
       totalClicks: 0,
       cards: null,
+      victory: false,
+      gameOver: false,
     };
     this.cardToCheck = null;
     this.matchedCards = [];
@@ -110,7 +114,7 @@ export default class Board extends Component {
     this.cardToCheck = null;
 
     if (this.matchedCards.length === this.state.cards.length) {
-      console.log('win');
+      this.victory();
     }
   }
 
@@ -133,16 +137,30 @@ export default class Board extends Component {
     }, 1000);
   }
 
+  victory = () => {
+    this.ac.stopMusic();
+    this.setState({ victory: true });
+  };
+
+  gameOver = () => {
+    this.ac.stopMusic();
+    this.setState({ gameOver: true });
+  };
+
   render() {
-    const { cards, totalClicks } = this.state;
+    const { victory, gameOver, cards, totalClicks } = this.state;
     const { totalTime, cardBack } = this.props;
+
+    if (victory) return <Victory />;
+
+    if (gameOver) return <Defeat />;
 
     if (!cards) return <Spinner />;
 
     return (
       <div className='game'>
         <div className='game__info'>
-          <Timer timeRemaining={totalTime} />
+          <Timer timeRemaining={totalTime} endGame={this.gameOver} />
           <FlipsCounter totalClicks={totalClicks} />
         </div>
         {cards.map((card) => (

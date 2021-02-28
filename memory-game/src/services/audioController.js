@@ -18,6 +18,11 @@ export default class AudioController {
     if (this.isMusicOn) this.bgMusic.play();
   }
 
+  stopMusic() {
+    this.bgMusic.pause();
+    this.bgMusic.currentTime = 0;
+  }
+
   flip() {
     if (this.isSoundsOn) {
       this.flipSound.currentTime = 0;
