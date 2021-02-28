@@ -103,7 +103,13 @@ export default class Settings extends Component {
               <option value='owl'>🦉</option>
               <option value='hat'>🧙‍♀️</option>
             </Select>
-            <button className='button'>Start Game</button>
+            <button
+              className='button'
+              onClick={() => {
+                this.props.updateData(this.state);
+              }}>
+              Start Game
+            </button>
           </React.Fragment>
         }
       </Container>

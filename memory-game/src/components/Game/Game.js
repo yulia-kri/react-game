@@ -7,16 +7,23 @@ import Spinner from '../Spinner/Spinner';
 
 import cardsArray from '../../data/cards.data';
 import shuffleArray from '../../utils/helpers';
+import AudioController from '../../services/audioController';
 
 import './Game.css';
 
 export default class Board extends Component {
   constructor(props) {
     super(props);
+    this.ac = new AudioController(
+      props.bgMusic,
+      props.musicVolume,
+      props.sounds,
+      props.soundsVolume,
+    );
+    this.totalTime = props.totalTime;
+    this.numberOfCards = props.numberOfCards / 2;
+    this.cardBack = props.cardBack;
     this.state = {
-      totalTime: props.totalTime,
-      numberOfCards: props.numberOfCards,
-      cardBack: props.cardBack,
       totalClicks: 0,
       cards: null,
     };
@@ -26,20 +33,20 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
-    const { numberOfCards } = this.state;
-
     let newCards = cardsArray.map((card) => {
       return { ...card, isFlipped: false, id: card.name.replace(/\s/g, '') };
     });
     newCards = shuffleArray(newCards);
     newCards = newCards
-      .slice(0, numberOfCards)
+      .slice(0, this.numberOfCards)
       .flatMap((card) => [card, { ...card, id: `2nd${card.id}` }]);
     newCards = shuffleArray(newCards);
 
     this.setState({
       cards: newCards,
     });
+
+    this.ac.startMusic();
   }
 
   canFlipCard(card) {
@@ -48,6 +55,8 @@ export default class Board extends Component {
 
   flipCard = (card) => {
     if (!this.canFlipCard(card)) return;
+
+    this.ac.flip();
 
     const { id } = card;
 
@@ -81,6 +90,8 @@ export default class Board extends Component {
   cardsMatch(card1, card2) {
     this.matchedCards.push(card1);
     this.matchedCards.push(card2);
+
+    this.ac.match();
 
     console.log('matched cards:', this.matchedCards);
 
@@ -122,7 +133,7 @@ export default class Board extends Component {
   }
 
   render() {
-    const { cards, cardBack, totalTime, totalClicks } = this.state;
+    const { cards, totalClicks } = this.state;
     console.log(this.state);
 
     if (!cards) return <Spinner />;
@@ -130,11 +141,11 @@ export default class Board extends Component {
     return (
       <div className='game'>
         <div className='game__info'>
-          <Timer timeRemaining={totalTime} />
+          <Timer timeRemaining={this.totalTime} />
           <FlipsCounter totalClicks={totalClicks} />
         </div>
         {cards.map((card) => (
-          <Card card={card} flipCard={this.flipCard} cardBack={cardBack} key={card.id} />
+          <Card card={card} flipCard={this.flipCard} cardBack={this.cardBack} key={card.id} />
         ))}
       </div>
     );
