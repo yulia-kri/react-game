@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { set } from '../../utils/localStorage';
+
 export default class Timer extends Component {
   state = {
     timeRemaining: this.props.timeRemaining,
@@ -13,6 +15,7 @@ export default class Timer extends Component {
     const { timeRemaining } = this.state;
 
     if (timeRemaining > 0) {
+      set('time', timeRemaining);
       this.setState(({ timeRemaining }) => {
         const time = --timeRemaining;
         return { timeRemaining: time };

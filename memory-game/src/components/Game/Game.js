@@ -10,6 +10,7 @@ import Defeat from '../Defeat/Defeat';
 import cardsArray from '../../data/cards.data';
 import shuffleArray from '../../utils/helpers';
 import AudioController from '../../services/audioController';
+import { set, get } from '../../utils/localStorage';
 
 import './Game.css';
 
@@ -34,6 +35,8 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
+    set('gameData', this.props);
+
     const { numberOfCards } = this.props;
 
     let newCards = cardsArray.map((card) => {
@@ -50,6 +53,8 @@ export default class Board extends Component {
     });
 
     this.ac.startMusic();
+
+    set('cards', newCards);
   }
 
   canFlipCard(card) {
@@ -97,7 +102,7 @@ export default class Board extends Component {
 
     this.ac.match();
 
-    console.log('matched cards:', this.matchedCards);
+    set('matched', this.matchedCards);
 
     this.setState(({ cards }) => {
       return {
@@ -139,13 +144,28 @@ export default class Board extends Component {
 
   victory = () => {
     this.ac.stopMusic();
+    this.saveToRecords(true);
     this.setState({ victory: true });
   };
 
   gameOver = () => {
     this.ac.stopMusic();
+    this.saveToRecords(false);
     this.setState({ gameOver: true });
   };
+
+  saveToRecords(isWin) {
+    const gameObj = {
+      numberOfCards: this.props.numberOfCards,
+      time: +this.props.totalTime - +get('time'),
+      clicks: this.state.totalClicks,
+      isWin,
+    };
+    const records = JSON.parse(get('records')) || [];
+    records.push(gameObj);
+    localStorage.clear();
+    set('records', records);
+  }
 
   render() {
     const { victory, gameOver, cards, totalClicks } = this.state;

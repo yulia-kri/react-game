@@ -1,9 +1,17 @@
 import React from 'react';
 
-const FlipsCounter = (props) => (
-  <div className='info__flips'>
-    Flips <span>{props.totalClicks}</span>
-  </div>
-);
+import { set } from '../../utils/localStorage';
+
+const FlipsCounter = (props) => {
+  const { totalClicks } = props;
+
+  set('clicks', totalClicks);
+
+  return (
+    <div className='info__flips'>
+      Flips <span>{totalClicks}</span>
+    </div>
+  );
+};
 
 export default FlipsCounter;
