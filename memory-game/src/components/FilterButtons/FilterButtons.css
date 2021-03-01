@@ -1,0 +1,28 @@
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+
+.btn {
+  padding: 0.3rem 2rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 1.8rem;
+  color: #c0c0c0;
+  background: #071a3b;
+  border: 0;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn.active {
+  background: #1859c9;
+}
+
+.btn:first-of-type {
+  border-top-left-radius: 8px;
+}
+
+.btn:last-of-type {
+  border-top-right-radius: 8px;
+}
