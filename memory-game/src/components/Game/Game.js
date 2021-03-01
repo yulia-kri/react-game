@@ -155,11 +155,22 @@ export default class Board extends Component {
   };
 
   saveToRecords(isWin) {
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    };
+    const date = new Date().toLocaleString('ru', options);
+
     const gameObj = {
+      date,
       numberOfCards: this.props.numberOfCards,
       time: +this.props.totalTime - +get('time'),
       clicks: this.state.totalClicks,
-      isWin,
+      result: isWin ? 'Win' : 'Lose',
     };
     const records = JSON.parse(get('records')) || [];
     records.push(gameObj);
