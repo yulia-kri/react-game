@@ -6,7 +6,7 @@ const Select = (props) => {
   const { label, name, value, handleChange } = props;
 
   return (
-    <div>
+    <div className='settings-item'>
       {label}
       <select name={name} value={value} onChange={handleChange}>
         {props.children}

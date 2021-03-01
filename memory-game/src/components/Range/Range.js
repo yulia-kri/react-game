@@ -6,7 +6,7 @@ const Range = (props) => {
   const { label, isChecked, value, name, handleChange } = props;
 
   return (
-    <div className={`${isChecked ? 'visible' : 'fade'}`}>
+    <div className={`settings-item ${isChecked ? 'visible' : 'fade'}`}>
       {label}
       <input
         type='range'

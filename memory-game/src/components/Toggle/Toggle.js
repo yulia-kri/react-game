@@ -6,7 +6,7 @@ const Toggle = (props) => {
   const { label, id, isChecked, handleClick } = props;
 
   return (
-    <div>
+    <div className='settings-item'>
       {label}
       <div className={`toggle ${isChecked ? 'on' : ''}`} id={id} onClick={handleClick}>
         <button className='toggle__dot'></button>

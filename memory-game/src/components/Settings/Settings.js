@@ -44,8 +44,6 @@ export default class Settings extends Component {
       cardsBack,
     } = this.state;
 
-    console.log(this.state);
-
     return (
       <Container>
         {
