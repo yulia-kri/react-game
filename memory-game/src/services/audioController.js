@@ -14,7 +14,6 @@ export default class AudioController {
   }
 
   startMusic() {
-    console.log('play bg music');
     if (this.isMusicOn) this.bgMusic.play();
   }
 

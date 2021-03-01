@@ -10,9 +10,6 @@ export default class StatisticsPage extends Component {
   render() {
     const records = JSON.parse(get('records'));
 
-    console.log(typeof records);
-    console.log(records);
-
     if (!records) return <h3>Sorry, you don't have any statictics yet. Play some games first.</h3>;
 
     return (
