@@ -39,6 +39,7 @@ const NewGamePage = () => {
           musicVolume={musicVolume}
           sounds={sounds}
           soundsVolume={soundsVolume}
+          saved={false}
         />
       );
     }

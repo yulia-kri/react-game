@@ -29,38 +29,55 @@ export default class Board extends Component {
       victory: false,
       gameOver: false,
     };
+    this.matchedCards = props.saved ? props.saved.matched : [];
     this.cardToCheck = null;
-    this.matchedCards = [];
     this.busy = false;
   }
 
   componentDidMount() {
-    set('gameData', this.props);
+    if (!this.props.saved) {
+      const { numberOfCards } = this.props;
 
-    const { numberOfCards } = this.props;
+      let newCards = cardsArray.map((card) => {
+        return { ...card, isFlipped: false, id: card.name.replace(/\s/g, '') };
+      });
+      newCards = shuffleArray(newCards);
+      newCards = newCards
+        .slice(0, numberOfCards / 2)
+        .flatMap((card) => [card, { ...card, id: `2nd${card.id}` }]);
+      newCards = shuffleArray(newCards);
 
-    let newCards = cardsArray.map((card) => {
-      return { ...card, isFlipped: false, id: card.name.replace(/\s/g, '') };
+      this.setState({
+        cards: newCards,
+      });
+
+      this.ac.startMusic();
+      set('gameData', this.props);
+      set('cards', newCards);
+    } else {
+      const newCards = this.hideMatchedCards(this.props.saved.cards);
+
+      this.setState({
+        cards: newCards,
+        totalClicks: this.props.saved.totalClicks,
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.ac.stopMusic();
+  }
+
+  hideMatchedCards(cards) {
+    return cards.map((card) => {
+      return this.matchedCards.includes(card.id) ? { ...card, hidden: true } : card;
     });
-    newCards = shuffleArray(newCards);
-    newCards = newCards
-      .slice(0, numberOfCards / 2)
-      .flatMap((card) => [card, { ...card, id: `2nd${card.id}` }]);
-    newCards = shuffleArray(newCards);
-
-    this.setState({
-      cards: newCards,
-    });
-
-    this.ac.startMusic();
-
-    set('cards', newCards);
   }
 
   canFlipCard(card) {
     let sameCards;
     if (this.cardToCheck) sameCards = card.id === this.cardToCheck.id;
-    return !this.busy && !this.matchedCards.includes(card) && !sameCards;
+    return !this.busy && !this.matchedCards.includes(card.id) && !sameCards;
   }
 
   flipCard = (card) => {
@@ -97,12 +114,10 @@ export default class Board extends Component {
   };
 
   cardsMatch(card1, card2) {
-    this.matchedCards.push(card1);
-    this.matchedCards.push(card2);
+    this.matchedCards.push(card1.id);
+    this.matchedCards.push(card2.id);
 
     this.ac.match();
-
-    set('matched', this.matchedCards);
 
     this.setState(({ cards }) => {
       return {
@@ -117,6 +132,8 @@ export default class Board extends Component {
     });
 
     this.cardToCheck = null;
+
+    set('matched', this.matchedCards);
 
     if (this.matchedCards.length === this.state.cards.length) {
       this.victory();
@@ -143,9 +160,11 @@ export default class Board extends Component {
   }
 
   victory = () => {
-    this.ac.stopMusic();
-    this.saveToRecords(true);
-    this.setState({ victory: true });
+    setTimeout(() => {
+      this.ac.stopMusic();
+      this.saveToRecords(true);
+      this.setState({ victory: true });
+    }, 1500);
   };
 
   gameOver = () => {
@@ -168,7 +187,7 @@ export default class Board extends Component {
     const gameObj = {
       date,
       numberOfCards: this.props.numberOfCards,
-      time: +this.props.totalTime - +get('time'),
+      time: +this.props.totalTime - +get('time') + 1,
       clicks: this.state.totalClicks,
       result: isWin ? 'Win' : 'Lose',
     };
@@ -180,7 +199,7 @@ export default class Board extends Component {
 
   render() {
     const { victory, gameOver, cards, totalClicks } = this.state;
-    const { totalTime, cardBack } = this.props;
+    const { totalTime, cardBack, saved } = this.props;
 
     if (victory) return <Victory />;
 
@@ -191,7 +210,7 @@ export default class Board extends Component {
     return (
       <div className='game'>
         <div className='game__info'>
-          <Timer timeRemaining={totalTime} endGame={this.gameOver} />
+          <Timer timeRemaining={saved ? saved.timeRemaining : totalTime} endGame={this.gameOver} />
           <FlipsCounter totalClicks={totalClicks} />
         </div>
         {cards.map((card) => (

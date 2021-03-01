@@ -19,6 +19,12 @@
   user-select: none;
 }
 
+.card.hidden {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
 .card-face {
   position: absolute;
   width: 100%;
