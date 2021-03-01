@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Card from '../Card/Card';
 import Timer from '../Timer/Timer';
@@ -197,13 +198,29 @@ export default class Board extends Component {
     set('records', records);
   }
 
+  redirect() {
+    setTimeout(() => {
+      this.setState({ redirect: true });
+    }, 5000);
+  }
+
   render() {
-    const { victory, gameOver, cards, totalClicks } = this.state;
+    const { victory, gameOver, cards, totalClicks, redirect } = this.state;
     const { totalTime, cardBack, saved } = this.props;
 
-    if (victory) return <Victory />;
+    if (redirect) {
+      return <Redirect to='/statistics' />;
+    }
 
-    if (gameOver) return <Defeat />;
+    if (victory) {
+      this.redirect();
+      return <Victory />;
+    }
+
+    if (gameOver) {
+      this.redirect();
+      return <Defeat />;
+    }
 
     if (!cards) return <Spinner />;
 
