@@ -14,6 +14,11 @@ h3 {
   color: #c0c0c0;
 }
 
+.statistics {
+  height: 70vh;
+  overflow-y: auto;
+}
+
 .table__header,
 .table__line {
   display: grid;

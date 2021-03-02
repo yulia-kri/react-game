@@ -1,5 +1,5 @@
 .game {
-  width: 100vw;
+  width: 95vw;
   display: grid;
   grid-template-columns: repeat(auto-fill, 11rem);
   grid-gap: 1rem;
@@ -14,7 +14,7 @@
   padding: 0 0.5rem 1rem;
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 600;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   color: #c0c0c0;
 }
 

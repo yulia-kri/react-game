@@ -39,7 +39,7 @@ export default class StatisticsPage extends Component {
     const visibleItems = this.filter(records, filter);
 
     return (
-      <Container>
+      <Container classes={'statistics'}>
         <FilterButtons filter={filter} onFilterChange={this.changeFilter} />
         <ul className='table__header'>
           <li>Played at</li>

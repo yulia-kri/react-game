@@ -45,7 +45,7 @@ export default class Settings extends Component {
     } = this.state;
 
     return (
-      <Container>
+      <Container classes={''}>
         {
           <React.Fragment>
             <Toggle
