@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import NewGamePage from '../NewGamePage/NewGamePage';
 import SavedGamePage from '../SavedGamePage/SavedGamePage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
+import Autoplay from '../Autoplay/Autoplay';
 
 import './App.css';
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path='/newgame' component={NewGamePage} />
           <Route path='/saved' component={SavedGamePage} />
           <Route path='/statistics' component={StatisticsPage} />
+          <Route path='/autoplay' component={Autoplay} />
         </React.Fragment>
       </Router>
     );

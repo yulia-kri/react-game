@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Game from '../Game/Game';
 import Settings from '../Settings/Settings';
 
-const NewGamePage = () => {
+const Autoplay = () => {
   return class extends Component {
     state = {
       gameStarted: false,
@@ -28,7 +28,7 @@ const NewGamePage = () => {
         gameStarted,
       } = this.state;
 
-      if (!gameStarted) return <Settings updateData={this.updateData} autoplay={false} />;
+      if (!gameStarted) return <Settings updateData={this.updateData} autoplay={true} />;
 
       return (
         <Game
@@ -40,11 +40,11 @@ const NewGamePage = () => {
           sounds={sounds}
           soundsVolume={soundsVolume}
           saved={false}
-          autoplay={false}
+          autoplay={true}
         />
       );
     }
   };
 };
 
-export default NewGamePage();
+export default Autoplay();

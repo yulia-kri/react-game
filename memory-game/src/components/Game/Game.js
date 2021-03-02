@@ -53,8 +53,11 @@ export default class Board extends Component {
       });
 
       this.ac.startMusic();
-      set('gameData', this.props);
-      set('cards', newCards);
+
+      if (!this.props.autoplay) {
+        set('gameData', this.props);
+        set('cards', newCards);
+      }
     } else {
       const newCards = this.hideMatchedCards(this.props.saved.cards);
 
@@ -65,9 +68,41 @@ export default class Board extends Component {
     }
   }
 
+  componentDidUpdate() {
+    const { autoplay } = this.props;
+
+    if (autoplay && this.matchedCards.length + 2 < this.state.cards.length) {
+      this.timer3 = setTimeout(() => {
+        this.performAutoplay();
+      }, 1500);
+    }
+  }
+
   componentWillUnmount() {
     this.ac.stopMusic();
+    clearTimeout(this.timer1);
+    clearTimeout(this.timer2);
+    clearTimeout(this.timer3);
   }
+
+  performAutoplay = async () => {
+    const { cards } = this.state;
+
+    let flippedCard = cards.find((card) => !card.isFlipped && !card.matched);
+    let flippedCardMatch = cards.find(
+      (card) => card.name === flippedCard.name && card.id !== flippedCard.id,
+    );
+
+    if (flippedCard && flippedCardMatch) {
+      this.timer1 = await setTimeout(() => {
+        this.flipCard(flippedCard);
+      }, 1500);
+
+      this.timer2 = await setTimeout(() => {
+        this.flipCard(flippedCardMatch);
+      }, 3000);
+    }
+  };
 
   hideMatchedCards(cards) {
     return cards.map((card) => {
@@ -134,7 +169,7 @@ export default class Board extends Component {
 
     this.cardToCheck = null;
 
-    set('matched', this.matchedCards);
+    if (!this.props.autoplay) set('matched', this.matchedCards);
 
     if (this.matchedCards.length === this.state.cards.length) {
       this.victory();
@@ -175,27 +210,31 @@ export default class Board extends Component {
   };
 
   saveToRecords(isWin) {
-    const options = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    };
-    const date = new Date().toLocaleString('ru', options);
+    const { autoplay } = this.props;
 
-    const gameObj = {
-      date,
-      numberOfCards: this.props.numberOfCards,
-      time: +this.props.totalTime - +get('time') + 1,
-      clicks: this.state.totalClicks,
-      result: isWin ? 'Win' : 'Lose',
-    };
-    const records = JSON.parse(get('records')) || [];
-    records.push(gameObj);
-    localStorage.clear();
-    set('records', records);
+    if (!autoplay) {
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      };
+      const date = new Date().toLocaleString('ru', options);
+
+      const gameObj = {
+        date,
+        numberOfCards: this.props.numberOfCards,
+        time: +this.props.totalTime - +get('time') + 1,
+        clicks: this.state.totalClicks,
+        result: isWin ? 'Win' : 'Lose',
+      };
+      const records = JSON.parse(get('records')) || [];
+      records.push(gameObj);
+      localStorage.clear();
+      set('records', records);
+    }
   }
 
   redirect() {
@@ -206,7 +245,14 @@ export default class Board extends Component {
 
   render() {
     const { victory, gameOver, cards, totalClicks, redirect } = this.state;
-    const { totalTime, cardBack, saved } = this.props;
+    const { totalTime, cardBack, saved, autoplay } = this.props;
+
+    const gameInfoEl = (
+      <div className='game__info'>
+        <Timer timeRemaining={saved ? saved.timeRemaining : totalTime} endGame={this.gameOver} />
+        <FlipsCounter totalClicks={totalClicks} />
+      </div>
+    );
 
     if (redirect) {
       return <Redirect to='/statistics' />;
@@ -224,14 +270,13 @@ export default class Board extends Component {
 
     if (!cards) return <Spinner />;
 
+    const flipHandler = !autoplay ? this.flipCard : () => {};
+
     return (
       <div className='game'>
-        <div className='game__info'>
-          <Timer timeRemaining={saved ? saved.timeRemaining : totalTime} endGame={this.gameOver} />
-          <FlipsCounter totalClicks={totalClicks} />
-        </div>
+        {!autoplay ? gameInfoEl : null}
         {cards.map((card) => (
-          <Card card={card} flipCard={this.flipCard} cardBack={cardBack} key={card.id} />
+          <Card card={card} flipCard={flipHandler} cardBack={cardBack} key={card.id} />
         ))}
       </div>
     );

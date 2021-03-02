@@ -44,6 +44,14 @@ export default class Settings extends Component {
       cardsBack,
     } = this.state;
 
+    const timeEl = !this.props.autoplay ? (
+      <Select label={'Time'} name={'totalTime'} value={totalTime} handleChange={this.handleChange}>
+        <option value='60'>60</option>
+        <option value='100'>100</option>
+        <option value='150'>150</option>
+      </Select>
+    ) : null;
+
     return (
       <Container classes={''}>
         {
@@ -74,15 +82,7 @@ export default class Settings extends Component {
               value={soundsVolume}
               handleChange={this.handleChange}
             />
-            <Select
-              label={'Time'}
-              name={'totalTime'}
-              value={totalTime}
-              handleChange={this.handleChange}>
-              <option value='60'>60</option>
-              <option value='100'>100</option>
-              <option value='150'>150</option>
-            </Select>
+            {timeEl}
             <Select
               label={'Number of cards'}
               name={'numberOfCards'}

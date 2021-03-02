@@ -31,7 +31,7 @@ export default class StatisticsPage extends Component {
   }
 
   render() {
-    const records = JSON.parse(get('records'));
+    const records = JSON.parse(get('records')).reverse();
 
     if (!records) return <h3>Sorry, you don't have any statictics yet. Play some games first.</h3>;
 

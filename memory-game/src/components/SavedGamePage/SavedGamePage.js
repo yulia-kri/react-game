@@ -41,6 +41,7 @@ const SavedGamePage = () => {
       sounds={sounds}
       soundsVolume={soundsVolume}
       saved={saved}
+      autoplay={false}
     />
   );
 };
