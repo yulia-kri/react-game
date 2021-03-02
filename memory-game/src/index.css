@@ -9,6 +9,7 @@ html {
 
 button:hover,
 .link:hover,
+.logo:hover,
 .card:hover {
   cursor: url('./magic.png'), auto;
 }

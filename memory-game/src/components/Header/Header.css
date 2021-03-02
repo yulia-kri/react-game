@@ -1,9 +1,15 @@
-h1 {
+.page-title {
+  display: flex;
+  justify-content: center;
   margin: 0;
+}
+
+.logo {
   text-align: center;
   font-family: 'Almendra', serif;
   font-size: 5rem;
   color: #c0c0c0;
+  text-decoration: none;
 }
 
 .links-list {

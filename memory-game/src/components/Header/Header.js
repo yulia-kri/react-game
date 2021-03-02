@@ -1,12 +1,16 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import './Header.css';
 
 const Header = () => {
   return (
     <React.Fragment>
-      <h1 className='page-title'>Memory Game in Hogwarts</h1>
+      <h1 className='page-title'>
+        <Link className='logo' to='/'>
+          Memory Game in Hogwarts
+        </Link>
+      </h1>
       <ul className='links-list'>
         <li>
           <NavLink className='link' to='/newgame' activeClassName='active'>
