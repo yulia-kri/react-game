@@ -22,3 +22,7 @@ h1 {
   color: #c0c0c0;
   text-decoration: none;
 }
+
+.link.active {
+  color: #fb8500;
+}

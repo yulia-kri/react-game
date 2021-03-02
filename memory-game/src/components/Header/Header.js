@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './Header.css';
 
@@ -9,24 +9,24 @@ const Header = () => {
       <h1 className='page-title'>Memory Game in Hogwarts</h1>
       <ul className='links-list'>
         <li>
-          <Link className='link' to='/newgame'>
+          <NavLink className='link' to='/newgame' activeClassName='active'>
             New Game
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className='link' to='/saved'>
+          <NavLink className='link' to='/saved' activeClassName='active'>
             Saved Game
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className='link' to='/statistics'>
+          <NavLink className='link' to='/statistics' activeClassName='active'>
             Statistics
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className='link' to='/autoplay'>
+          <NavLink className='link' to='/autoplay' activeClassName='active'>
             Autoplay
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </React.Fragment>
