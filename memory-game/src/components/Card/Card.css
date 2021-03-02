@@ -1,8 +1,8 @@
 .card {
   position: relative;
-  height: 25rem;
-  width: 16rem;
-  border-radius: 12px;
+  height: 16rem;
+  width: 11rem;
+  border-radius: 8px;
 }
 
 .card.visible .card-back {
@@ -45,22 +45,18 @@
 }
 
 .card-front .scroll-name {
-  position: absolute;
-  bottom: 0.8rem;
-  left: -2.2rem;
-  height: 3.5rem;
-  width: 17rem;
+  max-height: 4.5rem;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 2.2rem;
+  text-align: center;
   font-size: 1.6rem;
   font-family: 'Satisfy', cursive;
   color: #615349;
-  background-image: url(./name.svg);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
+  background: #071a3b95;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .card-front .scroll-name p {
@@ -76,12 +72,12 @@
 
 .cobweb {
   position: absolute;
-  width: 4rem;
+  width: 3rem;
   transition: width 100ms ease-in-out;
 }
 
 .card-back:hover .cobweb {
-  width: 4.5rem;
+  width: 3.5rem;
 }
 
 .top-left {
@@ -108,20 +104,29 @@
 }
 
 .owl {
-  width: 8rem;
+  position: relative;
+  width: 5rem;
 }
 
 .broom {
-  width: 9rem;
+  width: 6rem;
   transform: rotate(22deg);
 }
 
 .hat {
-  width: 7rem;
+  width: 5rem;
 }
 
 .card-back:hover .broom {
   animation: ring 3s linear infinite;
+}
+
+.card-back:hover .owl {
+  animation: slideLeftRight 1s linear infinite;
+}
+
+.card-back:hover .hat {
+  animation: stretch-bounce 1.5s linear infinite;
 }
 
 @keyframes ring {
@@ -170,6 +175,39 @@
 
   40% {
     transform: rotate(22deg);
+  }
+}
+
+@keyframes slideLeftRight {
+  0% {
+    left: 0;
+  }
+
+  33% {
+    left: 15px;
+  }
+
+  66% {
+    right: 45px;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes stretch-bounce {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1.2, 0.7);
+  }
+  50% {
+    transform: scale(0.9, 1.2) translateY(-35px);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
 

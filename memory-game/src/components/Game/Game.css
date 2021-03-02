@@ -1,10 +1,10 @@
 .game {
   width: 100vw;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 16rem);
+  grid-template-columns: repeat(auto-fill, 11rem);
   grid-gap: 1rem;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .game__info {

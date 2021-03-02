@@ -9,10 +9,14 @@
   color: #c0c0c0;
 }
 
+.settings-item:first-of-type {
+  margin-top: 1rem;
+}
+
 .button {
   align-self: center;
   padding: 0.4rem 1.4rem;
-  margin-top: 3rem;
+  margin: 3rem 0 2rem;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 1.8rem;
   font-weight: 500;
