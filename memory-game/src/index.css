@@ -29,7 +29,7 @@ body {
   background-size: cover;
 }
 
-/* body:before,
+body:before,
 body:after {
   position: absolute;
   content: '';
@@ -51,7 +51,7 @@ body:after {
   left: 0;
   background-image: url('https://github.com/joshuaward/codepen-images/blob/master/clouds-right.png?raw=true');
   animation: clouds2 100s linear infinite;
-} */
+}
 
 @keyframes clouds1 {
   to {

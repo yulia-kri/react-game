@@ -31,9 +31,11 @@ export default class StatisticsPage extends Component {
   }
 
   render() {
-    const records = JSON.parse(get('records')).reverse();
+    let records = JSON.parse(get('records'));
 
     if (!records) return <h3>Sorry, you don't have any statictics yet. Play some games first.</h3>;
+
+    records = records.reverse();
 
     const { filter } = this.state;
     const visibleItems = this.filter(records, filter);
