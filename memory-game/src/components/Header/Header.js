@@ -5,7 +5,7 @@ import './Header.css';
 
 const Header = () => {
   return (
-    <React.Fragment>
+    <header>
       <h1 className='page-title'>
         <Link className='logo' to='/'>
           Memory Game in Hogwarts
@@ -33,7 +33,7 @@ const Header = () => {
           </NavLink>
         </li>
       </ul>
-    </React.Fragment>
+    </header>
   );
 };
 

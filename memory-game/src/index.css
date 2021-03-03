@@ -8,10 +8,15 @@ html {
 }
 
 button:hover,
+a:hover,
 .link:hover,
 .logo:hover,
 .card:hover {
   cursor: url('./magic.png'), auto;
+}
+
+a {
+  text-decoration: none;
 }
 
 body {

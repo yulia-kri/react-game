@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import NewGamePage from '../NewGamePage/NewGamePage';
 import SavedGamePage from '../SavedGamePage/SavedGamePage';
 import StatisticsPage from '../StatisticsPage/StatisticsPage';
@@ -22,6 +23,8 @@ class App extends Component {
           <Route path='/saved' component={SavedGamePage} />
           <Route path='/statistics' component={StatisticsPage} />
           <Route path='/autoplay' component={Autoplay} />
+
+          <Footer />
         </React.Fragment>
       </Router>
     );
