@@ -18,7 +18,11 @@ class App extends Component {
           <Header />
           <HotKeys />
 
-          <Route path='/' render={() => <img src='images/welcome.gif' alt='' />} exact />
+          <Route
+            path='/'
+            render={() => <img src='images/welcome.gif' alt='' className='welcome-img' />}
+            exact
+          />
           <Route path='/newgame' component={NewGamePage} />
           <Route path='/saved' component={SavedGamePage} />
           <Route path='/statistics' component={StatisticsPage} />
