@@ -48,4 +48,8 @@ h3 {
   li {
     padding: 0.3rem 1rem;
   }
+
+  .statistics {
+    height: 60vh;
+  }
 }
