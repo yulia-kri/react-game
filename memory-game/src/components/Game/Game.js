@@ -7,6 +7,7 @@ import FlipsCounter from '../FlipsCounter/FlipsCounter';
 import Spinner from '../Spinner/Spinner';
 import Victory from '../Victory/Victory';
 import Defeat from '../Defeat/Defeat';
+import FullScreen from '../FullScreen/FullScreen';
 
 import cardsArray from '../../data/cards.data';
 import shuffleArray from '../../utils/helpers';
@@ -274,6 +275,7 @@ export default class Board extends Component {
 
     return (
       <div className='game'>
+        <FullScreen />
         {!autoplay ? gameInfoEl : null}
         {cards.map((card) => (
           <Card card={card} flipCard={flipHandler} cardBack={cardBack} key={card.id} />

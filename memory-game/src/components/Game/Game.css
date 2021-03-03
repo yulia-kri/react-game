@@ -1,4 +1,5 @@
 .game {
+  position: relative;
   width: 95vw;
   display: grid;
   grid-template-columns: repeat(auto-fill, 11rem);
